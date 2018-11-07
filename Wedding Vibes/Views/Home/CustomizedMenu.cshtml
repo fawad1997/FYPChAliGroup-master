@@ -1,0 +1,26 @@
+﻿@model Wedding_Vibes.Models.MenuVM.CustomizedMenuVM
+@{
+    ViewData["Title"] = "CustomizedMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>Customized Menu</h2>
+    @using (Html.BeginForm("CustomizedMenuPost", "Home"))
+    {
+        foreach (var item in Model.AvailableItems)
+        {
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                           name="SelectedItems"
+                           value="@item.Value" /> @item.Text
+                    </label>
+                </div>
+            }
+            <div class="form-group text-center">
+                <input type="submit" class="btn btn-primary" value="Create Customized Menu" />
+            </div>
+        }
+</div>
+
+

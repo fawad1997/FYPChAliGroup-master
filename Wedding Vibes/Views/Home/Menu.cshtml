@@ -1,0 +1,115 @@
+﻿@model List<Wedding_Vibes.Models.MenuVM.MenuVM>
+
+@{
+    ViewData["Title"] = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h1><center>Menus</center></h1>
+    <div class="row">
+
+        @foreach (var m in Model)
+        {
+            @if (m.Name == "Customized Menu")
+            {
+                continue;
+            }
+            <div class="col-xs-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@m.Name</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            @{ string men = null; }
+                            @foreach (var mitem in m.Items)
+                            {
+                                @if (men == null)
+                                {
+                                    men = mitem.Category;
+                                    <li><strong>@mitem.Category</strong></li>
+                                }
+                                @if (men == mitem.Category)
+                                {
+                                    //continue;
+                                }
+                                else
+                                {
+                                    <li><strong>@mitem.Category</strong></li>
+                                    men = mitem.Category;
+                                }
+                                <ul>
+                                    <li>@mitem.ItemName</li>
+                                </ul>
+                            }
+                        </ul>
+                    </div>
+                    <div class="panel-footer">Rs. <strong>@m.Price+Tax / Person</strong></div>
+                </div>
+            </div>
+        }
+    </div>
+    <hr />
+    <center>OR</center>
+    <hr />
+    @{ bool btnshow = true; }
+    @foreach (var m in Model)
+    {
+        @if (m.HasCustomizedMenu != true)
+        {
+            continue;
+        }
+        btnshow = false;
+        <div class="row">
+            <div class="col-xs-6 col-xs-push-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                        <h3 class="panel-title">@m.Name</h3> <a href="/Home/DeleteMenu" class="btn btn-danger pull-right"><i class="fa fa-trash"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            @{ string men = null; }
+                            @foreach (var mitem in m.Items)
+                            {
+                                @if (men == null)
+                                {
+                                    men = mitem.Category;
+                                    <li><strong>@mitem.Category</strong></li>
+                                }
+                                @if (men == mitem.Category)
+                                {
+                                    //continue;
+                                }
+                                else
+                                {
+                                    <li><strong>@mitem.Category</strong></li>
+                                    men = mitem.Category;
+                                }
+                                <ul>
+                                    <li>@mitem.ItemName</li>
+                                </ul>
+                            }
+                        </ul>
+                    </div>
+                    <div class="panel-footer">Rs. <strong>2500+Tax / Person</strong></div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (btnshow)
+    {
+
+        <center>
+            <div class="col-xs-6 col-xs-push-3 btn-lg">
+
+                <a href="/Home/CustomizedMenu" class="btn btn-block btn-info">Create your own customized<strong> Menu</strong></a>
+            </div>
+        </center>
+    }
+    <br /><br />
+</div>
+<footer>
+    <p><center>&copy; 2018 - Wedding Vibes</center></p>
+    <br />
+</footer>
