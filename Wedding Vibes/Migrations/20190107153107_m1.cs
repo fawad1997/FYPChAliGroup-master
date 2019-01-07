@@ -55,7 +55,8 @@ namespace WeddingVibes.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     MenuName = table.Column<string>(maxLength: 100, nullable: false),
-                    MenuPrice = table.Column<double>(nullable: false)
+                    MenuPrice = table.Column<double>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

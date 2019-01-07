@@ -11,8 +11,8 @@ using Wedding_Vibes.Data;
 namespace WeddingVibes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181107043823_menuuserId")]
-    partial class menuuserId
+    [Migration("20190107153107_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
