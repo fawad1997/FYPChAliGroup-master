@@ -56,7 +56,7 @@ namespace Wedding_Vibes.Controllers
         }
 
         // GET: Reservations/Create
-        [Authorize]
+        [Authorize(Roles ="Member")]
         public async Task<IActionResult> Create()
         {
             var user = await _userManager.GetCurrentUser(HttpContext);

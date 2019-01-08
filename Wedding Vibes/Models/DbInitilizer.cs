@@ -27,6 +27,23 @@ namespace Wedding_Vibes.Models
                 if (user != null)
                     await UserManager.AddToRoleAsync(user, "Admin");
             }
+
+            var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            context.Database.EnsureCreated();
+            if (!context.Menu.Any())
+            {
+                context.Menu.Add(new Menu.Menu { MenuName = "Desert", MenuPrice = 1700.0 });
+                context.Menu.Add(new Menu.Menu { MenuName = "Menu 2", MenuPrice = 2000.0 });
+                context.SaveChanges();
+            }
+            if (!context.MenuItem.Any())
+            {
+                context.MenuItem.Add(new Menu.MenuItem { ItemName = "Item 1", Category = "Category 1", MenuId = 1 });
+                context.MenuItem.Add(new Menu.MenuItem { ItemName = "Item 2", Category = "Category 1", MenuId = 1 });
+                context.MenuItem.Add(new Menu.MenuItem { ItemName = "Item 3", Category = "Category 1", MenuId = 2 });
+                context.MenuItem.Add(new Menu.MenuItem { ItemName = "Item 4", Category = "Category 4", MenuId = 2 });
+                context.SaveChanges();
+            }
         }
     }
 }
