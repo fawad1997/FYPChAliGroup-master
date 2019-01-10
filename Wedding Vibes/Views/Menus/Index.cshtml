@@ -1,0 +1,85 @@
+﻿@using Wedding_Vibes.Models.Menu
+@model IEnumerable<Wedding_Vibes.Models.Menu.Menu>
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Menu List";
+}
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        @ViewData["Title"]
+    </div>
+<div class="card-body">
+<p>
+    <a asp-action="Create" class="btn btn-default" role="button">Create New</a>
+</p>
+<hr />
+<div class="table-responsive">
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+<thead>
+<tr>
+    <th>
+        @Html.DisplayNameFor(model => model.MenuName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.MenuPrice)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.MenuItems)
+    </th>
+    <th></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuItems)
+        </th>
+        <th></th>
+    </tr>
+</tr>
+</tfoot>
+<tbody>
+@foreach (var item in Model)
+{
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MenuPrice)
+        </td>
+        <td>
+            @{
+                string list = "";
+                if (item.MenuItems.Count > 0)
+                {
+                    list = item.MenuItems.Select(m => m.ItemName).Aggregate((a, x) => a + "," + x);
+                }
+            }
+            @Html.DisplayFor(modelItem => list)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+</div>
+</div>
+    @* <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> *@
+</div>
