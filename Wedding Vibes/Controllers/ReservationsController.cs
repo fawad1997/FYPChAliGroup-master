@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -7,21 +6,24 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Wedding_Vibes.Data;
-using Wedding_Vibes.Models;
-using Wedding_Vibes.Models.Reservation;
-using Wedding_Vibes.Services;
+using WeddingVibes.Data;
+using WeddingVibes.Extensions;
+using WeddingVibes.Models;
+using WeddingVibes.Models.Reservation;
+using WeddingVibes.Services;
 
-namespace Wedding_Vibes.Controllers
+namespace WeddingVibes.Controllers
 {
     public class ReservationsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailSender _emailSender;
 
-        public ReservationsController(ApplicationDbContext context,UserManager<ApplicationUser> userManager)
+        public ReservationsController(ApplicationDbContext context,UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
+            _emailSender = emailSender;
             _context = context;
         }
 
@@ -93,7 +95,12 @@ namespace Wedding_Vibes.Controllers
                 //{
 
                 //}
-                _context.Add(reservation);
+                await _emailSender.SendEmailReservationAsync(user.Email, new Message{Title = "New Reservation from ", ReservationDate = reservation.ReservationDate, ReserverName = reservation.FirstName+" "+ reservation.LastName});
+    
+                 _context.Add(reservation);
+                await _context.SaveChangesAsync();
+
+                _context.Notifications.Add(new Notification { MarkAsRead = false, Message = $"You have New Reservation from {reservation.FirstName}", RervationId = reservation.id });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -169,6 +176,12 @@ namespace Wedding_Vibes.Controllers
             {
                 return NotFound();
             }
+            if (reservation.ReservationDate < DateTime.Now.AddDays(3) && !User.IsInRole("Admin"))
+            {
+                TempData["error"] = "You cancel before the 3 days of your reservation date";
+                return RedirectToAction(nameof(Index));
+            }
+
 
             return View(reservation);
         }
@@ -179,6 +192,10 @@ namespace Wedding_Vibes.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reservation = await _context.Reservation.SingleOrDefaultAsync(m => m.id == id);
+            if (reservation.ReservationDate < DateTime.Now.AddDays(3) && !User.IsInRole("Admin"))
+            {
+                return RedirectToAction(nameof(Index));
+            }
             _context.Reservation.Remove(reservation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

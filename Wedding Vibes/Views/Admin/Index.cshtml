@@ -1,27 +1,29 @@
 ﻿
-@model IEnumerable<Wedding_Vibes.Models.Reservation.Reservation>
+@using System.Globalization
+@model WeddingVibes.Models.AdminVM.AdminVM
 @{
     Layout = "_LayoutAdmin";
     ViewData["Title"] = "Admin";
+    ViewData["Booking"] = "Booking";
 }
 
 <!-- Area Chart Example-->
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-chart-area"></i>
-        Area Chart Example
+        @ViewData["Booking"]  Statistics
     </div>
     <div class="card-body">
         <canvas id="myAreaChart" width="100%" height="30"></canvas>
     </div>
-    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    <div class="card-footer small text-muted">Today:@DateTime.Now</div>
 </div>
 
 <!-- DataTables Example -->
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-table"></i>
-        Data Table Example
+        @ViewData["Booking"]
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -29,36 +31,36 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.FirstName)
+                            @Html.DisplayNameFor(model => model.Reservation.FirstName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.LastName)
+                            @Html.DisplayNameFor(model => model.Reservation.LastName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Address)
+                            @Html.DisplayNameFor(model => model.Reservation.Address)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.HallName)
+                            @Html.DisplayNameFor(model => model.Reservation.HallName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PhoneNo)
+                            @Html.DisplayNameFor(model => model.Reservation.PhoneNo)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.NumberofGuests)
+                            @Html.DisplayNameFor(model => model.Reservation.NumberofGuests)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.ReservationDate)
+                            @Html.DisplayNameFor(model => model.Reservation.ReservationDate)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Title)
+                            @Html.DisplayNameFor(model => model.Reservation.Title)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Status)
+                            @Html.DisplayNameFor(model => model.Reservation.Status)
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Reservations)
                     {
                         <tr>
                             <td>
@@ -96,6 +98,17 @@
         </div>
     </div>
     <div class="card-footer small text-muted">Today : @DateTime.Now.Date</div>
+  
 </div>
 
+@section Scripts {
 
+    <script>
+        $(document).ready(function() {
+            var charVM = '@Html.Raw(Json.Serialize(Model.ChartVm))';
+            var data = JSON.parse(charVM);
+            console.log(data["reservationCounts"]);
+            barChart(data["lastSixMonths"], data["reservationCounts"]);
+        })
+    </script>
+}

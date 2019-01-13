@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WeddingVibes.Models.Menu.MenuItem>
+
+@{
+    ViewData["Title"] = "Create Menu Item";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+<div class="card-header">
+    <i class="fas fa-table"></i>
+    @ViewData["Title"]
+</div>
+<div class="card-body">
+<p>
+    <a asp-action="Create" class="btn btn-default" role="button">Create New</a>
+</p>
+<hr />
+<div class="table-responsive">
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Menu)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menu.MenuName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    
+            </tbody>
+            </table>
+        </div>
+    </div>
+    @* <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> *@
+</div>

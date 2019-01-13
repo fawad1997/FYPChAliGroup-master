@@ -1,6 +1,4 @@
-using System;
-
-namespace Wedding_Vibes.Models
+namespace WeddingVibes.Models
 {
     public class ErrorViewModel
     {

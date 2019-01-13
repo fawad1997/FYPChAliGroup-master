@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using Wedding_Vibes.Data;
+using WeddingVibes.Data;
 
 namespace WeddingVibes.Migrations
 {
@@ -17,7 +17,7 @@ namespace WeddingVibes.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -128,7 +128,7 @@ namespace WeddingVibes.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Wedding_Vibes.Models.ApplicationUser", b =>
+            modelBuilder.Entity("WeddingVibes.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -142,6 +142,9 @@ namespace WeddingVibes.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("IsActive")
+                        .IsConcurrencyToken();
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -179,7 +182,24 @@ namespace WeddingVibes.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Wedding_Vibes.Models.Menu.Menu", b =>
+            modelBuilder.Entity("WeddingVibes.Models.Feedback.Feedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Message")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Feedback");
+                });
+
+            modelBuilder.Entity("WeddingVibes.Models.Menu.Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -197,7 +217,7 @@ namespace WeddingVibes.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("Wedding_Vibes.Models.Menu.MenuItem", b =>
+            modelBuilder.Entity("WeddingVibes.Models.Menu.MenuItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -219,7 +239,23 @@ namespace WeddingVibes.Migrations
                     b.ToTable("MenuItem");
                 });
 
-            modelBuilder.Entity("Wedding_Vibes.Models.Reservation.Reservation", b =>
+            modelBuilder.Entity("WeddingVibes.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("MarkAsRead");
+
+                    b.Property<string>("Message");
+
+                    b.Property<int>("RervationId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("WeddingVibes.Models.Reservation.Reservation", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
@@ -259,6 +295,20 @@ namespace WeddingVibes.Migrations
                     b.ToTable("Reservation");
                 });
 
+            modelBuilder.Entity("WeddingVibes.Models.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Service");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -269,7 +319,7 @@ namespace WeddingVibes.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Wedding_Vibes.Models.ApplicationUser")
+                    b.HasOne("WeddingVibes.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -277,7 +327,7 @@ namespace WeddingVibes.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Wedding_Vibes.Models.ApplicationUser")
+                    b.HasOne("WeddingVibes.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -290,7 +340,7 @@ namespace WeddingVibes.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Wedding_Vibes.Models.ApplicationUser")
+                    b.HasOne("WeddingVibes.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -298,23 +348,30 @@ namespace WeddingVibes.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Wedding_Vibes.Models.ApplicationUser")
+                    b.HasOne("WeddingVibes.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Wedding_Vibes.Models.Menu.MenuItem", b =>
+            modelBuilder.Entity("WeddingVibes.Models.Feedback.Feedback", b =>
                 {
-                    b.HasOne("Wedding_Vibes.Models.Menu.Menu", "Menu")
+                    b.HasOne("WeddingVibes.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("WeddingVibes.Models.Menu.MenuItem", b =>
+                {
+                    b.HasOne("WeddingVibes.Models.Menu.Menu", "Menu")
                         .WithMany("MenuItems")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Wedding_Vibes.Models.Reservation.Reservation", b =>
+            modelBuilder.Entity("WeddingVibes.Models.Reservation.Reservation", b =>
                 {
-                    b.HasOne("Wedding_Vibes.Models.ApplicationUser", "user")
+                    b.HasOne("WeddingVibes.Models.ApplicationUser", "user")
                         .WithMany()
                         .HasForeignKey("UserID");
                 });

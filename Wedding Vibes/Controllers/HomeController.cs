@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,13 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Wedding_Vibes.Data;
-using Wedding_Vibes.Models;
-using Wedding_Vibes.Models.Menu;
-using Wedding_Vibes.Models.MenuVM;
-using Wedding_Vibes.Services;
+using WeddingVibes.Data;
+using WeddingVibes.Extensions;
+using WeddingVibes.Models;
+using WeddingVibes.Models.Menu;
+using WeddingVibes.Models.MenuVM;
 
-namespace Wedding_Vibes.Controllers
+namespace WeddingVibes.Controllers
 {
     public class HomeController : Controller
     {
@@ -27,7 +26,8 @@ namespace Wedding_Vibes.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var services = _context.Service.ToList();
+            return View(services);
         }
 
         public async Task<IActionResult> Menu()

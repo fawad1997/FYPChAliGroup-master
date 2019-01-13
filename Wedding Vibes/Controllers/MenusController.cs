@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Wedding_Vibes.Data;
-using Wedding_Vibes.Models;
-using Wedding_Vibes.Models.Menu;
-using Wedding_Vibes.Models.MenuVM;
-using Wedding_Vibes.Services;
+using WeddingVibes.Data;
+using WeddingVibes.Models.Menu;
+using WeddingVibes.Models.MenuVM;
 
-namespace Wedding_Vibes.Controllers
+namespace WeddingVibes.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class MenusController : Controller
@@ -53,8 +50,7 @@ namespace Wedding_Vibes.Controllers
         // GET: Menus/Create
         public async Task<IActionResult> Create()
         {
-            var items = await _context.MenuItem.ToArrayAsync();
-            ViewData["MenuList"] = new SelectList(items, "Id", "ItemName");
+
             return View();
            
         }
@@ -64,23 +60,16 @@ namespace Wedding_Vibes.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,SelectedItems")] MenuVM menu)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price")] MenuVM menu)
         {
             if (ModelState.IsValid)
             {
-                    var menuItems = new List<MenuItem>();
-                    foreach (var item in menu.SelectedItems)
-                    {
-                        long menuId = Convert.ToInt64(item);
-                        var menuItem = await _context.MenuItem.FirstOrDefaultAsync(i => i.Id == menuId);
-                        menuItems.Add(menuItem);
-                    }
+                   
 
                     var menuEntity = new Menu
                     {
                         MenuName = menu.Name,
                         MenuPrice = menu.Price,
-                        MenuItems = menuItems
                     };
                     _context.Add(menuEntity);
                     await _context.SaveChangesAsync();
@@ -134,19 +123,13 @@ namespace Wedding_Vibes.Controllers
                 try
                 {
                     var menuEntity =await _context.Menu.FirstOrDefaultAsync(c => c.Id == id);
-                    var menuItems = new List<MenuItem>();
                     if (menuEntity !=null)
                     {
-                        foreach (var item in menu.SelectedItems)
-                        {
-                            long menuId = Convert.ToInt64(item);
-                            var menuItem =await _context.MenuItem.FirstOrDefaultAsync(i=>i.Id== menuId);
-                            menuItems.Add(menuItem);
-                        }
+
 
                         menuEntity.MenuName = menu.Name;
                         menuEntity.MenuPrice = menu.Price;
-                        menuEntity.MenuItems = menuItems;
+
                          
                         _context.Update(menuEntity);
                         await _context.SaveChangesAsync();

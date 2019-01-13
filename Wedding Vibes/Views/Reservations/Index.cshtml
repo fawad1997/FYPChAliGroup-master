@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Wedding_Vibes.Models.Reservation.Reservation>
+﻿@model IEnumerable<WeddingVibes.Models.Reservation.Reservation>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,6 +6,7 @@
 }
 <div class="container">
     <h2>Reservations</h2>
+    <p style="color:red">@TempData["error"]</p>
 
     <p>
         <a asp-action="Create">Create New</a>

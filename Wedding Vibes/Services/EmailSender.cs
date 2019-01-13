@@ -1,13 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Wedding_Vibes.Services
+namespace WeddingVibes.Services
 {
     // This class is used by the application to send email for account confirmation and password reset.
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
@@ -39,5 +36,6 @@ namespace Wedding_Vibes.Services
             return client.SendEmailAsync(msg);
 
         }
+        
     }
 }

@@ -6,10 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
-    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
-    <Compile Remove="Data\Migrations\20180704084458_reservations.cs" />
-    <Compile Remove="Data\Migrations\20180704084458_reservations.Designer.cs" />
+    <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="wwwroot\Capture4.PNG\**" />
+    <Content Remove="Data\Migrations\**" />
+    <Content Remove="wwwroot\Capture4.PNG\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="wwwroot\Capture4.PNG\**" />
+    <None Remove="Data\Migrations\**" />
+    <None Remove="wwwroot\Capture4.PNG\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20180704090015_reserv.cs" />
     <Compile Remove="Migrations\20180704090015_reserv.Designer.cs" />
     <Compile Remove="Migrations\20180705172319_reservation.cs" />
@@ -38,10 +45,6 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.1" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

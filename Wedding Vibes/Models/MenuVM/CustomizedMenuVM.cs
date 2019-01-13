@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Wedding_Vibes.Models.MenuVM
+namespace WeddingVibes.Models.MenuVM
 {
     public class CustomizedMenuVM
     {

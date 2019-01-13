@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Wedding_Vibes.Data;
-using Wedding_Vibes.Models;
+using WeddingVibes.Data;
+using WeddingVibes.Models;
 
-namespace Wedding_Vibes
+namespace WeddingVibes
 {
     public class Program
     {

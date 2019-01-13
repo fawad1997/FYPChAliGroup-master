@@ -38,8 +38,13 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></li>
+                    <li><a asp-area="" asp-controller="Feedbacks" asp-action="Create">Feedback</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a asp-area="" asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

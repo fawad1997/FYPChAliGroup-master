@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,14 +6,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Wedding_Vibes.Models;
-using Wedding_Vibes.Models.AccountViewModels;
-using Wedding_Vibes.Services;
+using WeddingVibes.Extensions;
+using WeddingVibes.Models;
+using WeddingVibes.Models.AccountViewModels;
+using WeddingVibes.Services;
 
-namespace Wedding_Vibes.Controllers
+namespace WeddingVibes.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -65,9 +64,15 @@ namespace Wedding_Vibes.Controllers
                 if (result.Succeeded)
                 {
                     ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
+                    if (!user.IsActive)
+                    {
+                        await Logout();
+                        ModelState.AddModelError(string.Empty, "Your Account is blocked by administrator");
+                        return View(model);
+                    }
                     // Redirect to User landing page on SignIn, according to Role
                     var rol = await _userManager.GetRolesAsync(user);
-                    if(rol[0]=="Admin"){
+                    if(rol.FirstOrDefault()=="Admin"){
                         return RedirectToAction("Index", "Admin");
                     }
                     
@@ -227,9 +232,9 @@ namespace Wedding_Vibes.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IsActive = true};
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (result.Succeeded && user.IsActive)
                 {
                     _logger.LogInformation("User created a new account with password.");
 

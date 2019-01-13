@@ -1,24 +1,22 @@
-﻿@using Wedding_Vibes.Models.Menu
-@model IEnumerable<Wedding_Vibes.Models.Menu.Menu>
+﻿@model IEnumerable<WeddingVibes.Models.Menu.Menu>
 
 @{
     Layout = "_LayoutAdmin";
     ViewData["Title"] = "Menu List";
 }
-
 <!-- DataTables Example -->
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-table"></i>
         @ViewData["Title"]
     </div>
-<div class="card-body">
-<p>
-    <a asp-action="Create" class="btn btn-default" role="button">Create New</a>
-</p>
-<hr />
-<div class="table-responsive">
-<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <div class="card-body">
+        <p>
+            <a asp-action="Create" class="btn btn-default" role="button">Create New</a>
+        </p>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 <thead>
 <tr>
     <th>

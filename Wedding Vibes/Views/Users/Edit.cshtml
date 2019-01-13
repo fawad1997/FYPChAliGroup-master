@@ -1,0 +1,53 @@
+@model WeddingVibes.Models.ApplicationUser
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Edit User";
+}
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-12 col-md-offset-3">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    @ViewData["Title"]
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-1">
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+
+                                </div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="form-group">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" readonly="readonly" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PhoneNumber" class="control-label"></label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-default" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,61 @@
+@model WeddingVibes.Models.ApplicationUser
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="container" style="margin-top: 20px;">
+<div class="row">
+    <div class="col-md-8 col-md-offset-3">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                @ViewData["Title"]
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+
+                        <div>
+                            <h4>ApplicationUser</h4>
+                            <hr />
+                            <dl class="dl-horizontal">
+        
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Email)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.PhoneNumber)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.IsActive)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.IsActive)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>

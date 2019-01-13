@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Wedding_Vibes.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using WeddingVibes.Controllers;
 
-namespace Microsoft.AspNetCore.Mvc
+namespace WeddingVibes.Extensions
 {
     public static class UrlHelperExtensions
     {

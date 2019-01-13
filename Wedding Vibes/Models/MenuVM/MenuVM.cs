@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Wedding_Vibes.Models.Menu;
+using WeddingVibes.Models.Menu;
 
-namespace Wedding_Vibes.Models.MenuVM
+namespace WeddingVibes.Models.MenuVM
 {
     public class MenuVM
     {
@@ -14,7 +11,6 @@ namespace Wedding_Vibes.Models.MenuVM
         public string Name { get; set; }
         [Display(Name = "Menu Items")]
         public List<MenuItem> Items { get; set; }
-        public List<string> SelectedItems { get; set; }
         public double Price { get; set; }
         public string UserID { get; set; }
         public bool HasCustomizedMenu { get; set; }

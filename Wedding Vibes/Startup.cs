@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Wedding_Vibes.Data;
-using Wedding_Vibes.Models;
-using Wedding_Vibes.Services;
+using Microsoft.Extensions.FileProviders;
+using WeddingVibes.Data;
+using WeddingVibes.Models;
+using WeddingVibes.Services;
+
 //using EFGetStarted.AspNetCore.NewDb.Models;
 
-namespace Wedding_Vibes
+namespace WeddingVibes
 {
     public class Startup
     {
@@ -37,7 +36,9 @@ namespace Wedding_Vibes
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
             services.AddMvc();
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);

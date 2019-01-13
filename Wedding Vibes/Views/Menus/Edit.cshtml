@@ -1,4 +1,4 @@
-﻿@model Wedding_Vibes.Models.MenuVM.MenuVM
+﻿@model WeddingVibes.Models.MenuVM.MenuVM
 
 @{
     Layout = "_LayoutAdmin";
@@ -8,9 +8,7 @@
 <div class="container" style="margin-top: 20px;">
     <div class="row">
         <div class="col-md-12 col-md-offset-3">
-            <p>
-                <a asp-action="Create" class="btn btn-default" role="button">Create New</a>
-            </p>
+
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
@@ -32,11 +30,7 @@
                                     <input asp-for="Price" class="form-control" />
                                     <span asp-validation-for="Price" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="SelectedItems" class="control-label"></label>
-                                    <select asp-for="SelectedItems" asp-items="ViewBag.MenuList" id="menuItems" class="form-control"></select>
-                                    <span asp-validation-for="SelectedItems" class="text-danger"></span>
-                                </div>
+                                
                                 <div class="form-group">
                                     <div class="pull-right" style="float: right">
                                         <input type="submit" value="Save" class="btn btn-default" />
