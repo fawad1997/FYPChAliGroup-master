@@ -132,14 +132,14 @@ namespace WeddingVibes.Controllers
                 try
                 {
                     var fileName = Path.GetFileName(image.FileName);
-                    string folderName = "images\\services";
-                    string webRootPath = _hostingEnvironment.WebRootPath;
-                    string newPath = Path.Combine(webRootPath, folderName);
+                    string newPath = Path.Combine(_hostingEnvironment.WebRootPath, "images/services");
+                    //string webRootPath = _hostingEnvironment.WebRootPath;
+                    //string newPath = Path.Combine(webRootPath, folderName);
                     if (!Directory.Exists(newPath))
                     {
                         Directory.CreateDirectory(newPath);
                     }
-                    using (var fileSteam = new FileStream(newPath, FileMode.Create))
+                    using (var fileSteam = new FileStream(Path.Combine(newPath, fileName), FileMode.CreateNew))
                     {
                         await image.CopyToAsync(fileSteam);
                         service.ImageUrl = fileName;
