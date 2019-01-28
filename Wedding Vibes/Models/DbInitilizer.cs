@@ -22,10 +22,10 @@ namespace WeddingVibes.Models
                 {
                     roleResult = await RolesManager.CreateAsync(new IdentityRole(roleName));
                 }
-                ApplicationUser user = await UserManager.FindByEmailAsync("fawad_12@outlook.com");
-                if (user != null)
-                    await UserManager.AddToRoleAsync(user, "Admin");
             }
+            ApplicationUser user = await UserManager.FindByEmailAsync("fawad_12@outlook.com");
+            if (user != null)
+                await UserManager.AddToRoleAsync(user, "Admin");
 
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             context.Database.EnsureCreated();

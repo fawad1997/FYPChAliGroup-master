@@ -26,7 +26,7 @@ namespace WeddingVibes.Controllers
         public IActionResult Index()
         {
            
-          var  reservationsList = _context.Reservation.Where(r => r.ReservationDate <= DateTime.Now && r.ReservationDate >= DateTime.Now.AddMonths(-5)).ToList();
+          var  reservationsList = _context.Reservation.Where(r => r.ReservationDate <= DateTime.Now.AddMonths(2) && r.ReservationDate >= DateTime.Now.AddMonths(-5)).ToList();
 
             var monthList = new List<string>();
             var monthCountList = new List<int>();
