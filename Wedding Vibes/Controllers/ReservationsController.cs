@@ -127,7 +127,7 @@ namespace WeddingVibes.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,FirstName,LastName,UserID,Address,HallName,PhoneNo,NumberofGuests,ReservationDate,Title,Status")] Reservation reservation)
+        public async Task<IActionResult> Edit(int id, [Bind("id,FirstName,LastName,UserID,Address,MenuId,PhoneNo,NumberofGuests,Time,ReservationDate,Title,Status,PaymentMethod")] Reservation reservation)
         {
             if (id != reservation.id)
             {

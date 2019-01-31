@@ -43,6 +43,10 @@ namespace WeddingVibes.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
+            if (TempData["success"] != null)
+            {
+                ViewBag.Message = "Confirmation has been sent to your provided email. proceed to login after confirmation!";
+            }
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -244,7 +248,8 @@ namespace WeddingVibes.Controllers
                     await _userManager.AddToRoleAsync(user, "Member");
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    TempData["success"] = true;
+                    return RedirectToAction(nameof(Login));
                 }
                 AddErrors(result);
             }

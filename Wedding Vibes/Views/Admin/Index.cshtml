@@ -55,7 +55,7 @@
                             @Html.DisplayNameFor(model => model.Reservation.Title)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Reservation.Status)
+                            Delete
                         </th>
                     </tr>
                 </thead>
@@ -88,7 +88,7 @@
                                 @Html.DisplayFor(modelItem => item.Title)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Status)
+                                <a asp-controller="Reservations" asp-action="Delete" asp-route-id="@item.id">Cancel</a>
                             </td>
 
                         </tr>
