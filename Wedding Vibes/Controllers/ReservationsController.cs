@@ -83,6 +83,12 @@ namespace WeddingVibes.Controllers
         {
             if (ModelState.IsValid)
             {
+                var x =_context.Reservation.Where(xx => xx.ReservationDate==reservation.ReservationDate && xx.Time.Equals(reservation.Time)).Any();
+                if (x)
+                {
+                    ModelState.AddModelError("ReservationDate","This time is already booked!");
+                    return View(reservation);
+                }
                 var user = await _userManager.GetCurrentUser(HttpContext);
                 reservation.UserID = user.Id;
                 
