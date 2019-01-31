@@ -11,9 +11,10 @@ using WeddingVibes.Data;
 namespace WeddingVibes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190131095636_pmandtime")]
+    partial class pmandtime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,6 +268,9 @@ namespace WeddingVibes.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("HallName")
+                        .IsRequired();
+
                     b.Property<string>("LastName")
                         .HasMaxLength(100);
 
@@ -277,8 +281,7 @@ namespace WeddingVibes.Migrations
                     b.Property<string>("PaymentMethod")
                         .IsRequired();
 
-                    b.Property<string>("PhoneNo")
-                        .IsRequired();
+                    b.Property<int>("PhoneNo");
 
                     b.Property<DateTime>("ReservationDate");
 

@@ -30,6 +30,23 @@
         </style>
     </environment>
     <environment exclude="Development">
+        <!-- Bootstrap core CSS-->
+        <link href="~/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom fonts for this template-->
+        <link href="~/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+        <!-- Page level plugin CSS-->
+        <link href="~/admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+        <link href="~/admin/vendor/multiselect/bootstrap-multiselect.css" rel="stylesheet" />
+        <!-- Custom styles for this template-->
+        <link href="~/admin/css/sb-admin.css" rel="stylesheet">
+        <style>
+            #notification > .unread {
+                background-color: gainsboro;
+                color: white;
+            }
+        </style>
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -291,6 +308,113 @@
 
     </environment>
     <environment exclude="Development">
+        <!-- Bootstrap core JavaScript-->
+        <script src="~/admin/vendor/jquery/jquery.min.js"></script>
+        <script src="~/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="~/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Page level plugin JavaScript-->
+        <script src="~/admin/vendor/chart.js/Chart.min.js"></script>
+        <script src="~/admin/vendor/datatables/jquery.dataTables.js"></script>
+        <script src="~/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <script src="~/admin/vendor/multiselect/bootstrap-multiselect.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="~/admin/js/sb-admin.min.js"></script>
+
+        <!-- Demo scripts for this page-->
+        <script src="~/admin/js/demo/datatables-demo.js"></script>
+        <script src="~/admin/js/demo/chart-area-demo.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#logout").click(function () {
+                    $("#logoutForm").submit();
+                });
+                Notifications();
+                var refreshId = setInterval(function () {
+                    Notifications();
+                }, 60000);
+                //                MarkAsRead();
+                MarkAsReadAll();
+            });
+
+            function Notifications() {
+                $.ajax({
+
+                    url: "/Admin/Notifications",
+                    method: "GET",
+                    success: function (data) {
+                        console.log(data);
+                        $("#notification-count").html(data.count);
+                        var $dropdown = $("#notification");
+                        $dropdown.html('');
+                        var result = data["notifications"];
+                        for (var i = 0; i < result.length; i++) {
+
+                            $dropdown.append('<a class="dropdown-item unread" onClick="MarkAsRead(event, this.id)" id="' + result[i].id + '" href="/Reservations/Details/' + result[i].rervationId + '">' + result[i].message + '</>');
+
+
+                        }
+
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+
+                });
+
+            }
+
+            function MarkAsRead(event, id) {
+                event.preventDefault();
+
+                $('#' + id + '').removeClass("unread");
+                var href = $('#' + id + '').attr("href");  // get href from link
+                console.log(href);
+                $.ajax({
+                    url: '/Admin/MarkAsReadNotification',
+                    method: 'POST',
+                    data: { id: id },
+                    success: function () {
+                        document.location = href;  // redirect browser to link
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+
+
+            }
+
+            function MarkAsReadAll() {
+                $("#markReadAll").on("click", function () {
+                    var ids = new Array();
+                    $('#notification a').each(function (index) {
+                        $('#' + this.id + '').removeClass("unread");
+                        console.log(this.id);
+                        ids.push(this.id);
+                    });
+                    console.log(ids);
+                    var readAll = ids.map(Number);
+                    console.log(readAll);
+                    $.ajax({
+                        url: '/Admin/MarkAsReadNotification',
+                        method: 'POST',
+                        data: { readAll: readAll },
+                        success: function () {
+                            //                            document.location = href;  // redirect browser to link
+                            $("#notification-count").html(0);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                });
+            }
+
+        </script>
+
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
@@ -307,7 +431,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-        
+
     </environment>
 
     @RenderSection("Scripts", required: false)

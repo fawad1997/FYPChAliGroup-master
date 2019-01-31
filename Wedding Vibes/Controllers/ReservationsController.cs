@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using WeddingVibes.Data;
 using WeddingVibes.Extensions;
 using WeddingVibes.Models;
+using WeddingVibes.Models.Menu;
 using WeddingVibes.Models.Reservation;
 using WeddingVibes.Services;
 
@@ -64,9 +66,10 @@ namespace WeddingVibes.Controllers
             var user = await _userManager.GetCurrentUser(HttpContext);
             DateTime today = DateTime.Now;
             var upcomingReservedDates = _context.Reservation.Where(X=>X.ReservationDate>today).Select(y=>y.ReservationDate).ToList();
-            ViewBag.ReservedDates = upcomingReservedDates;
-            var m = _context.Menu.Where(x=>x.UserId == null || x.UserId == user.Id).ToList();
-            ViewBag.Menu = new SelectList(m, "Id", "MenuName");
+            var cc = upcomingReservedDates.GroupBy(a => a).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+            ViewBag.ReservedDates = cc;
+            List<Menu> men = _context.Menu.Where(x => x.UserId == null || x.UserId == user.Id).ToList();
+            ViewBag.Menu = new SelectList(men, "Id", "MenuName");
             ViewData["UserID"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -76,25 +79,13 @@ namespace WeddingVibes.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,FirstName,LastName,UserID,Address,HallName,PhoneNo,NumberofGuests,ReservationDate,Title,Status")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("id,FirstName,LastName,UserID,Address,MenuId,PhoneNo,NumberofGuests,Time,ReservationDate,Title,Status,PaymentMethod")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetCurrentUser(HttpContext);
                 reservation.UserID = user.Id;
-                //if(reservation.HallName=="Hall 1")
-                //{
-                //    if(reservation.NumberofGuests>300)
-                //        ModelState.AddModelError()
-                //}
-                //if (reservation.HallName == "Hall 2")
-                //{
-
-                //}
-                //if (reservation.HallName == "Hall 3")
-                //{
-
-                //}
+                
                 await _emailSender.SendEmailReservationAsync(user.Email, new Message{Title = "New Reservation from ", ReservationDate = reservation.ReservationDate, ReserverName = reservation.FirstName+" "+ reservation.LastName});
     
                  _context.Add(reservation);

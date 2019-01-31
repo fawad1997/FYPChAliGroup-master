@@ -23,12 +23,13 @@ namespace WeddingVibes.Models.Reservation
         public ApplicationUser user { get; set; }
         [Required]
         public String Address { get; set; }
+        
         [Required]
-        public String HallName { get; set; }
-        [Required]
-        public int PhoneNo { get; set; }
+        [Display(Name = "Phone No")]
+        public string PhoneNo { get; set; }
 
         [Required]
+        [Display(Name = "Total Guests")]
         public int NumberofGuests { get; set; }
 
         [DataType(DataType.Date)]
@@ -36,7 +37,11 @@ namespace WeddingVibes.Models.Reservation
         [Display(Name = "Date of Reservation")]
         public DateTime ReservationDate { get; set; }
         [Required]
+        public string Time { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
+        public string PaymentMethod { get; set; }
         public Boolean Status { get; set; }
         public int MenuId { get; set; }
 
