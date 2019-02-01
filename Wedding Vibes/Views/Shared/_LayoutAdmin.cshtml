@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Wedding Vibes</title>
 
-    <environment include="Development">
+    <environment exclude="Development">
         <!-- Bootstrap core CSS-->
         <link href="~/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -29,7 +29,7 @@
             }
         </style>
     </environment>
-    <environment exclude="Development">
+    <environment include="Development">
         <!-- Bootstrap core CSS-->
         <link href="~/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -197,7 +197,7 @@
     </div>
 
     <!-- /.content-wrapper -->
-    <environment include="Development">
+    <environment exclude="Development">
         <!-- Bootstrap core JavaScript-->
         <script src="~/admin/vendor/jquery/jquery.min.js"></script>
         <script src="~/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -307,7 +307,7 @@
         </script>
 
     </environment>
-    <environment exclude="Development">
+    <environment include="Development">
         <!-- Bootstrap core JavaScript-->
         <script src="~/admin/vendor/jquery/jquery.min.js"></script>
         <script src="~/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

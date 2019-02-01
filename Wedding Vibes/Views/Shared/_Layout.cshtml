@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Wedding Vibes</title>
 
-    <environment include="Development">
+    <environment exclude="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="~/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="~/lib/multiselect/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
     </environment>
-    <environment exclude="Development">
+    <environment include="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -55,7 +55,7 @@
 
     </div>
 
-    <environment include="Development">
+    <environment exclude="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
                 integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
@@ -65,7 +65,7 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
 
     </environment>
-    <environment exclude="Development">
+    <environment include="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
